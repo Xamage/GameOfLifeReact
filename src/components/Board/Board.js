@@ -33,7 +33,7 @@ export class Board extends React.Component {
         }
     }
 
-    onCellStateChanged(x, y) {
+    onCellClicked(x, y) {
         const generation = [...this.state.generation];
         generation[y][x] = !generation[y][x];
         this.setState({ generation });
@@ -49,7 +49,7 @@ export class Board extends React.Component {
                         <Cell key={`${rowIndex}-${cellIndex}`}
                             alive={isAlive}
                             size={cellSize}
-                            onChange={e => this.onCellStateChanged(cellIndex, rowIndex)}
+                            onChange={e => this.onCellClicked(cellIndex, rowIndex)}
                         />
                     ))
                 )}
