@@ -7,7 +7,7 @@ const BoardWidthInPx = 600;
 export class Board extends React.Component {
     constructor(props) {
         super(props);
-        this.onCellStateChanged = this.onCellStateChanged.bind(this);
+        this.onCellStateChanged = this.onCellClicked.bind(this);
         this.state = { generation: createGeneration(props.width, props.height, false) };
     }
 
@@ -15,23 +15,20 @@ export class Board extends React.Component {
         if (prevProps.width !== this.props.width || prevProps.height !== this.props.height) {
             this.setState({ generation: createGeneration(this.props.width, this.props.height, false) });
         }
-        else
-            if (prevProps.isAlive !== this.props.isAlive) {
-                if (this.props.isAlive) {
-                    const intvl = setInterval(() => {
-                        this.setState(ps => ({ generation: computeNextGeneration(ps.generation) }));
-                    }
-                        , this.props.intervalDuration || 500);
-                    this.setState({ intvl });
-                }
-                else if (this.state.intvl) {
-                    clearInterval(this.state.intvl);
-                    this.setState({ intvl: undefined });
-                }
+        else if (prevProps.isAlive !== this.props.isAlive) {
+            if (this.props.isAlive) {
+                const intvl = setInterval(() => {
+                    this.setState(ps => ({ generation: computeNextGeneration(ps.generation) }));
+                }, this.props.duration || 500);
+                this.setState({ intvl });
             }
+            else {
+                clearInterval(this.state.intvl);
+            }
+        }
     }
 
-    onCellStateChanged(x, y) {
+    onCellClicked(x, y) {
         const generation = [...this.state.generation];
         generation[y][x] = !generation[y][x];
         this.setState({ generation });
@@ -47,7 +44,7 @@ export class Board extends React.Component {
                         <Cell key={`${rowIndex}-${cellIndex}`}
                             alive={isAlive}
                             size={cellSize}
-                            onChange={e => this.onCellStateChanged(cellIndex, rowIndex)} />
+                            onChange={e => this.onCellClicked(cellIndex, rowIndex)} />
                     ))
                 )}
             </div>

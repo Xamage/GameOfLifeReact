@@ -7,9 +7,10 @@ import { withPropsFeeder, PropsFeeder } from './PropsFeeder/PropsFeeder';
 const conf = {
   width: { title: 'Width', type: 'number' },
   height: { title: 'Height', type: 'number' },
-  intervalDuration: { title: 'Interval', type: 'number' },
+  duration: { title: 'Interval', type: 'number' },
   isAlive: { titleTrue: 'Stop', titleFalse: 'Start', type: 'boolean' }
 };
+
 // eslint-disable-next-line
 const AugmentedBoard = withPropsFeeder(Board, conf);
 
@@ -25,8 +26,11 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">The game of life</h1>
         </header>
-        <button onClick={() => this.setState(ps => ({ isAlive: !ps.isAlive }))}>Play | Pause</button>
-        <Board width={7} height={7} isAlive={this.state.isAlive} />
+
+        {/* <button onClick={() => this.setState(ps => ({ isAlive: !ps.isAlive }))}>
+          {(this.state.isAlive && 'Stop') || 'Start'}
+        </button>
+        <Board width={7} height={7} isAlive={this.state.isAlive} duration={250} /> */}
 
         {/* <PropsFeeder {...conf}>
           {props =>
@@ -35,7 +39,7 @@ class App extends Component {
           }
         </PropsFeeder> */}
 
-        {/* <AugmentedBoard /> */}
+        <AugmentedBoard />
       </div>
     );
   }
