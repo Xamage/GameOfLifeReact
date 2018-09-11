@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Cell } from '../Cell/Cell';
-import { createGeneration } from '../../gameOfLifeUtils';
+import { createGeneration, computeNextGeneration } from '../../gameOfLifeUtils';
 
 const BoardWidthInPx = 600;
 
@@ -15,7 +15,22 @@ export class Board extends React.Component {
         generation[2][2] = true;
         generation[3][3] = true;
 
-        this.state = { generation };
+        this.state = { generation, intervalId: null };
+    }
+
+    componentDidUpdate(previousProps) {
+        if (previousProps.isAlive !== this.props.isAlive) {
+            if (this.props.isAlive) {
+                const intervalId = setInterval(() => {
+                    const newGeneration = computeNextGeneration(this.state.generation);
+                    this.setState({ generation: newGeneration });
+                }, this.props.duration || 500);
+
+                this.setState({ intervalId });
+            } else {
+                clearInterval(this.state.intervalId);
+            }
+        }
     }
 
     onCellStateChanged(x, y) {
