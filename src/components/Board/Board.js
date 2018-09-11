@@ -19,8 +19,8 @@ export class Board extends React.Component {
     }
 
     componentDidUpdate(previousProps) {
-        if (previousProps.isAlive !== this.props.isAlive) {
-            if (this.props.isAlive) {
+        if (previousProps.isRunning !== this.props.isRunning) {
+            if (this.props.isRunning) {
                 const intervalId = setInterval(() => {
                     const newGeneration = computeNextGeneration(this.state.generation);
                     this.setState({ generation: newGeneration });
