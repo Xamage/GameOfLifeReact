@@ -1,18 +1,14 @@
 import * as React from 'react';
 
 export class PropsFeeder extends React.Component {
-    constructor(props) {
-        super(props);
-        this.getControlFor = this.getControlFor.bind(this);
-        this.state = {};
-    }
+    state = {};
 
     getControlFor(name, props) {
         switch (props.type) {
             case 'boolean':
                 {
                     return (
-                        <button onClick={(e) => this.setState({ [name]: !this.state[name] })}>
+                        <button onClick={() => this.setState({ [name]: !this.state[name] })}>
                             {(this.state[name] && props.titleTrue) || props.titleFalse}
                         </button>
                     );
@@ -22,9 +18,10 @@ export class PropsFeeder extends React.Component {
                     return (
                         <React.Fragment>
                             <label htmlFor={name}>{props.title}</label>
-                            <input id={name}
+                            <input id={name} 
                                 type="text"
-                                onChange={(e) => this.setState({ [name]: +e.target.value })} />
+                                onChange={(e) => this.setState({ [name]: +e.target.value })} 
+                            />
                         </React.Fragment>
                     );
                 }
