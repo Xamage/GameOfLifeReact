@@ -15,19 +15,49 @@ const conf = {
 const AugmentedBoard = withPropsFeeder(Board, conf);
 
 class App extends Component {
-  state = { isRunning: false }
-
+  state = { isRunning: false, width: 5, height: 3, duration: 500 }
+  
   render() {
+    console.log(this.state);
     return (
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">The game of life</h1>
         </header>
 
-        {/* <button onClick={() => this.setState(ps => ({ isRunning: !ps.isRunning }))}>
-          {(this.state.isRunning && 'Stop') || 'Start'}
-        </button>
-        <Board width={7} height={7} isRunning={this.state.isRunning} duration={250} /> */}
+        <div className="inputs">
+          <div className="input-row">
+            <label htmlFor="width">Width</label>
+            <input id="width"
+                  type="number"
+                  defaultValue={this.state.width}
+                  onChange={e => this.setState({width: e.target.valueAsNumber})} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="height">Height</label>
+            <input id="height"
+                  type="number"
+                  defaultValue={this.state.height}
+                  onChange={e => this.setState({height: e.target.valueAsNumber})} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="duration">Duration</label>
+            <input id="duration"
+                  type="number"
+                  min="10"
+                  defaultValue={this.state.duration}
+                  onChange={e => this.setState({duration: e.target.valueAsNumber || 10})} />
+          </div>
+          <div className="input-row">
+            <button onClick={() => this.setState(ps => ({ isRunning: !ps.isRunning }))}>
+              {(this.state.isRunning && 'Stop') || 'Start'}
+            </button>
+          </div>
+        </div>
+        <Board width={this.state.width}
+               height={this.state.height}
+               isRunning={this.state.isRunning}
+               duration={this.state.duration} />
 
         {/* <PropsFeeder {...conf}>
           {props =>
@@ -35,7 +65,7 @@ class App extends Component {
           }
         </PropsFeeder> */}
 
-        <AugmentedBoard />
+        {/* <AugmentedBoard /> */}
       </div>
     );
   }

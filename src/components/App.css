@@ -62,6 +62,7 @@
   width: 20px;
   border: 1px solid black;
   margin: -1px 0 0 -1px;
+  border-radius: 300px;
 }
 
 .cell.alive {

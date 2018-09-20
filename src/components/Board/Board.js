@@ -5,7 +5,11 @@ import { createGeneration, computeNextGeneration } from '../../gameOfLifeUtils';
 const BoardWidthInPx = 600
 
 export class Board extends React.Component {
-  state = { generation: null, intervalId: null };
+  constructor(props) {
+    super(props);
+    const generation = props.width && props.height && createGeneration(props.width, props.height, false);
+    this.state = { generation, intervalId: null };
+  }
 
   componentDidUpdate(previousProps) {
     const sizeHasChanged = this.props.width !== previousProps.width || this.props.height !== previousProps.height;
@@ -51,7 +55,7 @@ export class Board extends React.Component {
   }
 
   render() {
-    const cellSize = Math.trunc(BoardWidthInPx / this.props.width) - 1;
+    const cellSize = BoardWidthInPx / this.props.width - 1;
 
     return (
       <div className='board' style={{ 'width': `${BoardWidthInPx}px` }}>

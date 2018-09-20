@@ -19,8 +19,8 @@ export class PropsFeeder extends React.Component {
                         <React.Fragment>
                             <label htmlFor={name}>{props.title}</label>
                             <input id={name} 
-                                type="text"
-                                onChange={(e) => this.setState({ [name]: +e.target.value })} 
+                                type="number"
+                                onChange={(e) => this.setState({ [name]: e.target.valueAsNumber })} 
                             />
                         </React.Fragment>
                     );
